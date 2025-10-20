@@ -1,0 +1,19 @@
+<Project>
+  <PropertyGroup>
+    <!-- Enable nullable globally, but explicit per-project overrides can apply -->
+    <Nullable>enable</Nullable>
+    <!-- Treat warnings as errors by default; we'll disable per project if needed -->
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <!-- Apply stricter settings only to specific projects using Condition on ProjectName -->
+  <PropertyGroup Condition="'$(MSBuildProjectName)' == 'University.Enrollments.Domain'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(MSBuildProjectName)' == 'University.Enrollments.Tests'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+</Project>
