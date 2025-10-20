@@ -65,6 +65,8 @@ Resumo completo da conversa e ações executadas neste repositório `university-
 - `test/University.Enrollments.Tests/EnrollmentSpecs.cs` (testes xUnit)
 - `.editorconfig`, `Directory.Build.props`, `global.json`, `.gitignore`
 - `AGENTS.md`
+ - `ChangeLogs/20-10-2025_11-44-59_tdd-domain-init-summary/tdd-domain-init-summary.md` (este arquivo)
+ - `Prompts/20-10-2025_11-51-54_prompts-summary/prompts-session-summary.md` (prompts desta sessão)
 
 ## Tarefas automatizadas pelo agente nesta sessão
 - Rodar `dotnet restore`, `dotnet build`, `dotnet test` repetidamente para validar mudanças.

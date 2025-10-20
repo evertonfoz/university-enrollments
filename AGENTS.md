@@ -156,3 +156,20 @@ Prática opcional de commit
 - Por padrão o agente não fará commits sem autorização explícita.
 
 Essa convenção torna fácil localizar resumos de sessões passadas e automatizar a geração de relatórios de progresso.
+
+## Prompts — estratégia de arquivamento de pedidos
+
+Para facilitar auditoria e reuso das solicitações feitas ao agente, registre os prompts recebidos em uma pasta `Prompts` no root.
+
+- Estrutura de pastas: crie `Prompts` na raiz do repositório.
+- Para cada sessão, crie um subdiretório com o formato: `DD-MM-YYYY_HH-MM-SS_sufixo` (padrão brasileiro). Use um sufixo curto e descritivo, por exemplo `prompts-summary`.
+- Dentro do subdiretório, crie um arquivo Markdown `prompts-session-summary.md` contendo todos os pedidos do usuário reescritos como prompts claros (um por linha), em português.
+
+Conteúdo mínimo do arquivo de prompts:
+
+1. Cabeçalho com data/hora da sessão.
+2. Lista dos prompts (um por linha) em português, preferencialmente reutilizáveis.
+3. Referência ao ChangeLog correspondente (se aplicável).
+
+Por padrão, o agente não commit/pushará automaticamente esses arquivos ao repositório a menos que o usuário autorize explicitamente. Quando autorizado, o agente criará um commit com mensagem clara e fará push para o branch solicitado.
+
