@@ -75,29 +75,27 @@ namespace University.Enrollments.Domain
         /// - não permitir duplicidade do par (studentId, CourseId)
         /// - (nota) validações de janela e capacidade serão adicionadas posteriormente
         /// </summary>
-        /// <param name="studentId">Identificador do estudante.</param>
-        public void Enroll(int studentId)
+        /// <param name="student">Instância do estudante a ser matriculado.</param>
+        public void Enroll(Student student)
         {
-            if (studentId <= 0)
+            if (student == null)
             {
-                throw new DomainException("studentId inválido. Deve ser maior que zero.");
+                throw new DomainException("student inválido. Não pode ser nulo.");
+            }
+
+            if (student.StudentId <= 0)
+            {
+                throw new DomainException("student.StudentId inválido. Deve ser maior que zero.");
             }
 
             // Verifica duplicidade pelo par (StudentId, CourseId)
-            bool already = _enrollments.Exists(e => e.StudentId == studentId && e.CourseId == this.CourseId && e.Status == EnrollmentStatus.Enrolled);
+            bool already = _enrollments.Exists(e => e.Student != null && e.Student.StudentId == student.StudentId && e.Course != null && e.Course.CourseId == this.CourseId && e.Status == EnrollmentStatus.Enrolled);
             if (already)
             {
-                throw new DomainException($"Já existe um vínculo ativo para studentId={studentId} no courseId={CourseId}.");
+                throw new DomainException($"Já existe um vínculo ativo para studentId={student.StudentId} no courseId={CourseId}.");
             }
 
-            Enrollment enrollment = new()
-            {
-                StudentId = studentId,
-                CourseId = this.CourseId,
-                Status = EnrollmentStatus.Enrolled,
-                EnrolledOn = DateOnly.FromDateTime(DateTime.UtcNow)
-            };
-
+            var enrollment = new Enrollment(student, this, EnrollmentStatus.Enrolled);
             _enrollments.Add(enrollment);
         }
 
@@ -108,7 +106,7 @@ namespace University.Enrollments.Domain
         /// <param name="studentId">Identificador do estudante.</param>
         public bool HasEnrollment(int studentId)
         {
-            return _enrollments.Exists(e => e.StudentId == studentId && e.CourseId == this.CourseId && e.Status == EnrollmentStatus.Enrolled);
+            return _enrollments.Exists(e => e.Student != null && e.Student.StudentId == studentId && e.Course != null && e.Course.CourseId == this.CourseId && e.Status == EnrollmentStatus.Enrolled);
         }
     }
 }

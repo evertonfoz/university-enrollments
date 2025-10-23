@@ -31,6 +31,12 @@ Se houver algo que você não quer que eu execute automaticamente (por exemplo, 
 - Organização: `src/` para projetos de produção, `test/` para testes.
 - Projetos usam SDK-style csproj e target .NET 9 (configurável via `global.json`).
 - Domain: preferir modelos imutáveis quando fizer sentido; exponha APIs através de métodos (ex.: `Course.Enroll(studentId)`) e mantenha navegação unidirecional por padrão (ex.: Course → Enrollments) a menos que solicitado o oposto.
+
+### Convenção de nomes para identificadores (IDs)
+
+- Para manter consistência em todo o domínio, use o sufixo `Id` no nome da propriedade identificadora em todas as entidades e objetos de valor.
+- Exemplos: `Student.StudentId`, `Course.CourseId`, `Enrollment.EnrollmentId`.
+- Evite nomes genéricos como `Id` sozinho; sempre prefira o nome composto que identifica claramente a entidade.
 - Tratamento de erros de domínio: use `DomainException` para violações de regra; podemos adotar um tipo `Result<T>` mais tarde se preferir.
 - Testes: xUnit com testes pequenos e determinísticos. Nomeie testes em português seguindo o padrão: `Action_expectedResult_conditions` (ex.: `Enroll_sem_vagas_deve_falhar`).
 

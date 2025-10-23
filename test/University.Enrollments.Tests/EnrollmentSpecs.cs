@@ -16,16 +16,20 @@ namespace University.Enrollments.Tests
                 MatriculationStart = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-1)),
                 MatriculationEnd = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(10))
             };
-            int studentId = 42;
+            var student = new University.Enrollments.Domain.Student
+            {
+                StudentId = 42,
+                Name = "Test Student"
+            };
 
             // Act - primeiro enroll
-            course.Enroll(studentId);
+            course.Enroll(student);
 
             // Assert - vínculo criado
-            Assert.True(course.HasEnrollment(studentId));
+            Assert.True(course.HasEnrollment(student.StudentId));
 
-            // Act/Assert - segundo enroll com mesmo studentId deve falhar por unicidade
-            University.Enrollments.Domain.DomainException ex = Assert.Throws<University.Enrollments.Domain.DomainException>(() => course.Enroll(studentId));
+            // Act/Assert - segundo enroll com mesmo student deve falhar por unicidade
+            University.Enrollments.Domain.DomainException ex = Assert.Throws<University.Enrollments.Domain.DomainException>(() => course.Enroll(student));
             Assert.Contains("vínculo ativo", ex.Message);
         }
 
